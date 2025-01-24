@@ -8,12 +8,23 @@
             text-align: center;
             background-color: #f0f0f0;
             padding: 50px;
+            transition: all 0.5s;
         }
         .container {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.5s;
+        }
+        .fiesta {
+            animation: fiesta 1s;
+        }
+        @keyframes fiesta {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2) rotate(10deg); }
+            75% { transform: scale(1.1) rotate(-10deg); }
+            100% { transform: scale(1) rotate(0deg); }
         }
         button {
             padding: 10px 20px;
@@ -22,26 +33,53 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: all 0.3s;
         }
         button:hover {
             background-color: #45a049;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="contenedor">
         <h1>¡Hola Mundo!</h1>
         <p>Este es mi primer proyecto en GitHub</p>
         <p id="contador">Has hecho clic 0 veces</p>
         <button onclick="contarClics()">Haz clic aquí</button>
+        <p id="mensaje"></p>
     </div>
 
     <script>
         let clics = 0;
+        const colores = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD'];
+        const mensajes = ['¡INCREÍBLE!', '¡SIGUE ASÍ!', '¡FANTÁSTICO!', '¡GENIAL!', '¡WOW!'];
+
         function contarClics() {
             clics++;
             document.getElementById('contador').innerHTML = 
                 `Has hecho clic ${clics} veces`;
+
+            if (clics % 10 === 0) {
+                // Efectos especiales cada 10 clics
+                const contenedor = document.getElementById('contenedor');
+                const mensaje = document.getElementById('mensaje');
+                
+                // Agregar animación
+                contenedor.classList.add('fiesta');
+                
+                // Cambiar color de fondo
+                document.body.style.backgroundColor = 
+                    colores[Math.floor(Math.random() * colores.length)];
+                
+                // Mostrar mensaje aleatorio
+                mensaje.innerHTML = mensajes[Math.floor(Math.random() * mensajes.length)];
+                
+                // Quitar la clase de animación después de 1 segundo
+                setTimeout(() => {
+                    contenedor.classList.remove('fiesta');
+                }, 1000);
+            }
         }
     </script>
 </body>
